@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-function App() {
+import React, { FC } from "react";
+import RoutesComponent from "./routes";
+import { getCurrentUser } from "./redux/actions/userActions";
+import Cookies from "js-cookie";
+import { useAppDispatch } from "./redux/store";
+import { useEffect } from "react";
+const App: FC = () => {
+  const dispatch = useAppDispatch();
+  // useEffect(() => {
+  //   if (Cookies.get('token')) {
+  //     dispatch(getCurrentUser());
+  //   }
+  // }, [dispatch]);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <RoutesComponent />
+  )
 }
-
 export default App;
