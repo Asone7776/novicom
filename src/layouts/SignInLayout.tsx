@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Outlet } from 'react-router-dom';
 
-const SignInLayout = () => {
+const SignInLayout: FC = () => {
     return (
         <div className={'sign-in-layout'}>
             <Outlet />
