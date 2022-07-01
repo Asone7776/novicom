@@ -1,8 +1,12 @@
-import { useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
 import cn from "classnames";
 import { formatPrice, formatDate, getStatusName } from "../functions";
-import orderSlice from "../redux/slices/orderSlice";
-const AccordionItem = ({ item, onStatusChange }) => {
+import { OrderItem } from "../types/orders";
+interface AccordionItemProps {
+    item: OrderItem
+    onStatusChange: (status: number) => void
+}
+const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
     const [active, setActive] = useState(false);
     const [risk, setRisk] = useState('Смерть');
     const onToggle = () => {
@@ -13,7 +17,7 @@ const AccordionItem = ({ item, onStatusChange }) => {
             formatRisk(item.options[0].value, item.options[1].value);
         }
     }, [item]);
-    const formatRisk = (death, invalid) => {
+    const formatRisk = (death: boolean, invalid: boolean) => {
         if (death && !invalid) {
             setRisk('Смерть')
         }

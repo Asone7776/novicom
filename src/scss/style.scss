@@ -282,8 +282,8 @@ html * {
         padding-left: rem(20);
         padding-right: rem(20);
         font: {
-            family: "PT Sans Bold";
-            size: rem(14);
+            family: "Open Sans SemiBold";
+            size: rem(16);
         }
         &:hover,
         &:focus {
@@ -305,8 +305,8 @@ html * {
         color: $primary-color !important;
         border: rem(2) solid $primary-color;
         font: {
-            family: "PT Sans Bold";
-            size: rem(14);
+            family: "Open Sans SemiBold";
+            size: rem(16);
         }
         &:hover,
         &:focus {
@@ -612,7 +612,10 @@ p {
     border-radius: rem(8);
     .btn {
         width: 100%;
-        font-size: rem(18);
+        font: {
+            family: "Open Sans Bold";
+            size: rem(18);
+        }
     }
     h4 {
         margin-bottom: rem(30);
@@ -697,29 +700,15 @@ p {
 .content {
     background-color: $admin-bg;
     flex: 1;
-    // padding-left: rem(120);
-    // padding-right: rem(120);
-}
-.admin-header {
-    background: $white;
-    padding-top: rem(13);
-    padding-bottom: rem(13);
-    .row {
-        display: flex;
-        justify-content: space-between;
-    }
-    .current-user {
-        display: flex;
-        align-items: center;
-        .user-email {
-            padding-right: rem(30);
-            font: {
-                family: "PT Sans Bold";
-                size: rem(16);
-            }
-        }
-        .btn {
-            font-family: "PT Sans Bold";
+    height: 100%;
+    padding-top: rem(30);
+    padding-bottom: rem(30);
+
+    h3 {
+        margin-bottom: rem(30);
+        font: {
+            family: "Open Sans Bold";
+            size: rem(24);
         }
     }
 }
@@ -1162,13 +1151,13 @@ p {
         h5 {
             margin-bottom: rem(5);
             font: {
-                family: "PT Sans Bold";
+                family: "Open Sans SemiBold";
                 size: rem(16);
             }
         }
         .user-email {
             font: {
-                family: "PT Sans";
+                family: "Open Sans";
                 size: rem(12);
             }
             color: #006db7;
@@ -1188,15 +1177,19 @@ p {
             .icon {
                 opacity: 0.3;
                 margin-right: rem(15);
+                @include transition();
             }
             .title {
                 color: $black;
                 font: {
-                    family: "PT Sans Bold";
+                    family: "Open Sans SemiBold";
                     size: rem(14);
                 }
+                @include transition();
             }
         }
+        &:hover,
+        &:focus,
         &.current {
             .nav-item {
                 .icon {
@@ -1236,3 +1229,40 @@ p {
         }
     }
 }
+.today-orders {
+    .card {
+        height: 100%;
+        border: none;
+        border-radius:rem(8);
+        .card-body {
+            padding: rem(30);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            .card-top {
+                h4 {
+                    font: {
+                        family: "Open Sans SemiBold";
+                        size: rem(20);
+                    }
+                    margin-bottom: rem(15);
+                }
+                p {
+                    font: {
+                        family: "Open Sans";
+                        size: rem(14);
+                    }
+                    line-height: rem(24);
+                    margin-bottom: rem(30);
+                }
+            }
+            .card-bottom {
+                button {
+                    max-width: rem(255);
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+@import 'responsive'; 

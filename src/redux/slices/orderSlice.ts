@@ -1,23 +1,25 @@
 import { createSlice } from "@reduxjs/toolkit"
 import { getOrders, changeStatus } from '../actions/orderActions';
+import { OrdersInitialState } from "../../types/orders";
+const initialState: OrdersInitialState = {
+    loading: false,
+    data: [],
+    error: null,
+    changeStatus: {
+        loading: false,
+        data: null,
+        success: false,
+        error: null
+    }
+}
 const ordersSlice = createSlice({
     name: 'orders',
-    initialState: {
-        loading: false,
-        data: [],
-        error: null,
-        changeStatus: {
-            loading: false,
-            data: {},
-            success: false,
-            error: null
-        }
-    },
+    initialState,
     reducers: {
         resetStatus: (state) => {
             state.changeStatus = {
                 loading: false,
-                data: {},
+                data: null,
                 success: false,
                 error: null
             }

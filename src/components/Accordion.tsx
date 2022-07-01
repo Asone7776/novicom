@@ -1,10 +1,16 @@
-import React from "react";
+import React, { FC } from "react";
 import AccordionItem from "./AccordionItem";
-import Spinner from '../components/Spinner';
-import { useDispatch } from "react-redux";
+import Spinner from './Spinner';
 import { changeStatus } from "../redux/actions/orderActions";
-const Accordion = ({ loading, list }) => {
-    const dispatch = useDispatch();
+import { useAppDispatch } from "../redux/store";
+import { OrderItem } from "../types/orders";
+
+interface AccordionProps {
+    loading: boolean
+    list: OrderItem[]
+}
+const Accordion: FC<AccordionProps> = ({ loading, list }) => {
+    const dispatch = useAppDispatch();
     if (loading) {
         return (
             <div className="vertical-center" style={{ position: 'relative' }}>
@@ -17,7 +23,7 @@ const Accordion = ({ loading, list }) => {
             {list && list.map((item, index) => (
                 <AccordionItem key={`acc-${index}`} item={item} onStatusChange={(status) => {
                     dispatch(changeStatus({
-                        order_id:item.id,
+                        order_id: item.id,
                         status
                     }))
                 }} />
