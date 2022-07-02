@@ -1,5 +1,5 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { formatPrice } from '../ functions';
+import { formatPrice } from '../functions';
 const InputRange = forwardRef(({ suffix, needToFormat, min, max, onChange, defaultValue, step, ...rest }, ref) => {
     const [currentValue, setCurrentValue] = useState('100%');
     const [bgSize, setBgSize] = useState(0);

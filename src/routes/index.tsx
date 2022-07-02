@@ -1,17 +1,16 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import SignInLayout from '../layouts/SignInLayout';
 import AdminLayout from '../layouts/AdminLayout';
 import Login from "../containers/login";
 import TodayOrders from "../containers/polices/todayOrders";
 import PolicyPage from "../containers/polices";
-import PrePolicy from "../containers/polices/prefatory";
 import CreatePolicy from "../containers/polices/create";
 import ProtectedRoute from "../components/ProtectedRoute";
-import { useSelector } from "react-redux";
 import NotFound from "../components/NotFound";
+import { useAppSelector } from "../redux/store";
 const RoutesComponent = () => {
-    // const user = useSelector((state) => state.currentUser.data);
+    // const user = useAppSelector((state) => state.currentUser.data);
     return (
         <BrowserRouter>
             <Routes>
@@ -24,9 +23,13 @@ const RoutesComponent = () => {
                     element={<AdminLayout />}
                 >
                     {/* <Route path="/admin" element={<ProtectedRoute user={user} />}> */}
-                    <Route path="/admin">
-                        <Route path="/admin" element={<TodayOrders />} />
-                        <Route path="/admin/create" element={<CreatePolicy />} />
+                    <Route path="admin">
+                        <Route index element={<Navigate to={'/admin/new'} replace />} />
+                        <Route path="new" >
+                            <Route index element={<TodayOrders />} />
+                            <Route path="create" element={<CreatePolicy />} />
+                        </Route>
+                        <Route path="history" element={<PolicyPage />} />
                     </Route>
                 </Route>
                 <Route

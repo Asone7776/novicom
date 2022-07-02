@@ -11,7 +11,7 @@ export interface NavItemProps {
 
 const navigationItems: NavItemProps[] = [
     {
-        link: '/admin',
+        link: '/admin/new',
         icon: Profile,
         title: 'Новый полис'
     },

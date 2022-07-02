@@ -704,8 +704,11 @@ p {
     padding-top: rem(30);
     padding-bottom: rem(30);
 
-    h3 {
+    .top-heading {
         margin-bottom: rem(30);
+    }
+    h3 {
+        margin-bottom: rem(5);
         font: {
             family: "Open Sans Bold";
             size: rem(24);
@@ -741,10 +744,94 @@ p {
     margin-top: rem(14);
     margin-bottom: rem(14);
 }
+.accordion {
+    width: 100%;
+    .card {
+        margin-bottom: rem(10);
+        border: 0;
+        border-radius: rem(4);
+        .card-header {
+            background: $white;
+            cursor: pointer;
+            border-bottom: 0;
+            padding: 0;
+            [data-toggle="collapse"] {
+                padding: rem(12) rem(24);
+            }
+        }
+        .card-body {
+            padding: rem(12) rem(24);
+            padding-top: 0;
+            .row {
+                margin-bottom: rem(15);
+                .item {
+                    .sub-heading {
+                        font: {
+                            family: "PT Sans";
+                            size: rem(10);
+                        }
+                        margin-bottom: rem(5);
+                        &.big {
+                            margin-bottom: rem(10);
+                            font: {
+                                family: "Open Sans";
+                                size: rem(14);
+                            }
+                        }
+                    }
+                    .heading {
+                        font: {
+                            family: "PT Sans";
+                            size: rem(14);
+                        }
+                    }
+                    .btn {
+                        font: {
+                            family: "Open Sans SemiBold";
+                            size: rem(14);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .col {
+        font-size: rem(14);
+        &.id {
+            font: {
+                family: "PT Sans Bold";
+            }
+        }
+        &.status {
+            span {
+                color: $black;
+            }
+            .not-completed {
+                color: $red;
+            }
+            .completed {
+                color: $primary-color;
+            }
+        }
+        .arrow {
+            svg {
+                path {
+                    fill: rgba($color: $black, $alpha: 0.3);
+                }
+                @include transition();
+                &.active {
+                    transform: rotate(180deg);
+                    path {
+                        // fill: $primary-color;
+                        fill: rgba($color: $black, $alpha: 1);
+                    }
+                }
+            }
+        }
+    }
+}
 .information {
-    display: flex;
-    padding-top: rem(30);
-    padding-bottom: rem(60);
+    // display: flex;
     &.list-wrapper {
         .info-top-header {
             .btn {
@@ -753,78 +840,7 @@ p {
             }
         }
     }
-    .accordion {
-        width: 100%;
-        .card {
-            margin-bottom: rem(30);
-            border: 0;
-            border-radius: rem(4);
-            .card-header {
-                background: $white;
-                cursor: pointer;
-                border-bottom: 0;
-                padding: 0;
-                [data-toggle="collapse"] {
-                    padding: rem(12) rem(24);
-                }
-            }
-            .card-body {
-                padding: rem(12) rem(24);
-                padding-top: 0;
-                .row {
-                    margin-bottom: rem(15);
-                    .item {
-                        .sub-heading {
-                            font: {
-                                family: "PT Sans";
-                                size: rem(10);
-                            }
-                            margin-bottom: rem(5);
-                        }
-                        .heading {
-                            font: {
-                                family: "PT Sans";
-                                size: rem(14);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        .col {
-            font-size: rem(14);
-            &.id {
-                font: {
-                    family: "PT Sans Bold";
-                }
-            }
-            &.status {
-                span {
-                    color: $black;
-                }
-                .not-completed {
-                    color: $red;
-                }
-                .completed {
-                    color: #00858a;
-                }
-            }
-            .arrow {
-                svg {
-                    path {
-                        fill: rgba($color: $black, $alpha: 0.3);
-                    }
-                    @include transition();
-                    &.active {
-                        transform: rotate(180deg);
-                        path {
-                            fill: #e1ba00;
-                        }
-                    }
-                }
-            }
-        }
-    }
+
     .info-top-header {
         margin-bottom: rem(30);
         display: flex;
@@ -1233,7 +1249,7 @@ p {
     .card {
         height: 100%;
         border: none;
-        border-radius:rem(8);
+        border-radius: rem(8);
         .card-body {
             padding: rem(30);
             display: flex;
@@ -1264,5 +1280,15 @@ p {
             }
         }
     }
+    .orders {
+        margin-top: rem(60);
+        h4 {
+            font: {
+                family: "PT Sans Bold";
+                size: rem(20);
+            }
+            margin-bottom: rem(30);
+        }
+    }
 }
-@import 'responsive'; 
+@import "responsive";

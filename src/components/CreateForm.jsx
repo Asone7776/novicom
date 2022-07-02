@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import ParentSelect from './ParentSelect';
 import ParentCreateSelect from './ParentCreateSelect';
@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { passCreateFormData } from '../redux/slices/policeSlice';
 import CustomModal from './CustomModal';
 import { axiosAuth } from '../axios-instances';
+import InputRange from './InputRange';
 const CreateForm = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
@@ -147,6 +148,10 @@ const CreateForm = () => {
                 <div className="row">
                     <div className="col-8 small-gutters">
                         <div className="card custom-card">
+                            <h4>Страховая сумма</h4>
+                            <InputRange step={'50000'} suffix={''} needToFormat={true} defaultValue={2000000} min={500000} max={3000000} {...register('limit')} />
+                        </div>
+                        <div className="card custom-card">
                             <div className="card-body">
                                 <div className="form-group">
                                     <h4>Страхователь</h4>
@@ -244,7 +249,7 @@ const CreateForm = () => {
                                         </div>
                                     </>
                                 )}
-                                  {allFields.holder.value === "1" && (
+                                {allFields.holder.value === "1" && (
                                     <>
                                         <div className="row mb-3">
                                             <div className="col-12">
@@ -661,7 +666,7 @@ const CreateForm = () => {
                         </div>
                     </div>
                     <div className="col-4">
-                        <InfoCardCreate holder={savedFields[0]}  data={parsedData} complete={true} loading={loading} />
+                        <InfoCardCreate holder={savedFields[0]} data={parsedData} complete={true} loading={loading} />
                     </div>
                 </div>
             </form>

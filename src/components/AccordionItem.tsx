@@ -37,7 +37,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                 <div className="collapsed" data-toggle="collapse" data-target={`#collapse-${item.id}`} aria-expanded="true" aria-controls={`collapse-${item.id}`} onClick={onToggle}>
                     <div className="row">
                         <div className="col id">
-                            ID {item.policy_id}
+                            ID {item.policy_number}
                         </div>
                         <div className="col col-3 risk text-right">
                             {risk}
@@ -138,7 +138,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                     <div className="row">
                         <div className="col-5">
                             <div className="item">
-                                <div className="sub-heading">Полис</div>
+                                <div className="sub-heading big">Полис</div>
                                 {item.policy_url && (
                                     <a href={item.policy_url}>{item.policy_url}</a>
                                 )}
@@ -146,7 +146,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                         </div>
                         <div className="col-3">
                             <div className="item">
-                                <div className="sub-heading">Счёт на оплату</div>
+                                <div className="sub-heading big">Счёт на оплату</div>
                                 {item.invoice_url && (
                                     <a href={item.invoice_url}>{item.invoice_url}</a>
                                 )}
@@ -156,19 +156,19 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                     <div className="row">
                         <div className="col-12">
                             <div className="item">
-                                <div className="sub-heading">Статус оплаты</div>
+                                <div className="sub-heading big">Статус оплаты</div>
                                 <div className="d-flex">
-                                    <div className={cn('btn', { 'btn-blue': item.status === 3, 'btn-gray-transparent': item.status !== 3 })} onClick={() => {
+                                    <div className={cn('btn', { 'btn-primary': item.status === 3, 'btn-gray-transparent': item.status !== 3 })} onClick={() => {
                                         onStatusChange(3);
                                     }}>
                                         Оплачен
                                     </div>
-                                    <div className={cn('btn', { 'btn-blue': item.status === 0, 'btn-gray-transparent': item.status !== 0 })} onClick={() => {
+                                    <div className={cn('btn', { 'btn-primary': item.status === 0, 'btn-gray-transparent': item.status !== 0 })} onClick={() => {
                                         onStatusChange(0);
                                     }}>
                                         Не оплачен
                                     </div>
-                                    <div className={cn('btn', { 'btn-blue': item.status === -1, 'btn-gray-transparent': item.status !== -1 })} onClick={() => {
+                                    <div className={cn('btn', { 'btn-primary': item.status === -1, 'btn-gray-transparent': item.status !== -1 })} onClick={() => {
                                         onStatusChange(-1);
                                     }}>
                                         Отменён
