@@ -22,7 +22,7 @@ const PolicyPage: FC = () => {
     }, [filterProps, orders.changeStatus.success]);
 
     useEffect(() => {
-        dispatch(getUsers());
+        // dispatch(getUsers());
     }, []);
     useEffect(() => {
         if (orders.changeStatus.success) {

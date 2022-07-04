@@ -1,11 +1,22 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useState, ChangeEvent } from 'react';
 import { formatPrice } from '../functions';
-const InputRange = forwardRef(({ suffix, needToFormat, min, max, onChange, defaultValue, step, ...rest }, ref) => {
-    const [currentValue, setCurrentValue] = useState('100%');
-    const [bgSize, setBgSize] = useState(0);
-    const handleChange = (event) => {
+
+interface InputRangeProps {
+    suffix: string
+    needToFormat: boolean
+    min: number
+    max: number
+    onChange: (event: ChangeEvent) => void
+    defaultValue: number
+    step: string | number
+}
+
+const InputRange = forwardRef<any, InputRangeProps>(({ suffix, needToFormat, min, max, onChange, defaultValue, step, ...rest }, ref) => {
+    const [currentValue, setCurrentValue] = useState<string | number>('100%');
+    const [bgSize, setBgSize] = useState<string | number>(0);
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         let { value } = event.target;
-        changeBg(value);
+        changeBg(Number(value));
         setCurrentValue(value);
         onChange(event);
     }
@@ -15,7 +26,7 @@ const InputRange = forwardRef(({ suffix, needToFormat, min, max, onChange, defau
             changeBg(defaultValue);
         }
     }, [defaultValue]);
-    const changeBg = (val) => {
+    const changeBg = (val: number) => {
         setBgSize((val - min) * 100 / (max - min) + '% 100%');
     }
     return (

@@ -1,9 +1,16 @@
-import React from "react";
+import { FC } from "react";
 import ReactPaginate from 'react-paginate';
-const OrdersPagination = ({ last_page, onFilterChange, initialPage }) => {
 
-    const handlePageClick = (event) => {
-        onFilterChange('page', event.selected + 1)
+interface OrdersPaginationProps {
+    last_page: number
+    onFilterChange: (prop: string, value: any) => void
+    initialPage: number
+}
+
+const OrdersPagination: FC<OrdersPaginationProps> = ({ last_page, onFilterChange, initialPage }) => {
+
+    const handlePageClick = (object: { selected: number }) => {
+        onFilterChange('page', object.selected + 1)
     };
 
     return (
@@ -23,7 +30,7 @@ const OrdersPagination = ({ last_page, onFilterChange, initialPage }) => {
             activeClassName="active"
             previousClassName='d-none'
             nextClassName='d-none'
-            renderOnZeroPageCount={null}
+            renderOnZeroPageCount={() => null}
         />
     );
 }

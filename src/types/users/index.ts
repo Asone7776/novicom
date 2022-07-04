@@ -8,8 +8,8 @@ export interface userListObject {
     updated_at: string
 }
 export interface selectOption {
-    label: string,
-    value: string
+    label: string | null,
+    value: string | null
 }
 
 export type usersInitialStateType = {

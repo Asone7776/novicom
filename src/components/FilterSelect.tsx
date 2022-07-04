@@ -1,33 +1,43 @@
+import { FC } from "react";
 import Select, { components } from "react-select";
+import { selectOption } from "../types/users";
+interface FilterSelectProps {
+    options: selectOption[]
+    onChange: (value: any) => void
+}
+const initialValue: selectOption = {
+    label: 'Все',
+    value: null
+}
 const customStyles = {
     indicatorSeparator: () => ({
 
     }),
-    control: (provided) => ({
+    control: (provided: object) => ({
         ...provided,
         minHeight: '44px',
         height: '44px',
         border: 'none'
     }),
-    dropdownIndicator: (provided) => ({
+    dropdownIndicator: (provided: object) => ({
         ...provided,
         paddingRight: '14.5px'
     }),
-    valueContainer: (provided, state) => ({
+    valueContainer: (provided: object) => ({
         ...provided,
         height: '44px',
     }),
-    indicatorsContainer: (provided, state) => ({
+    indicatorsContainer: (provided: object) => ({
         ...provided,
         height: '44px',
     }),
-    input: (provided) => ({
+    input: (provided: object) => ({
         ...provided,
         height: '35px',
     })
 };
 
-const DropdownIndicator = (props) => {
+const DropdownIndicator = (props: any) => {
     return (
         <components.DropdownIndicator {...props}>
             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -36,7 +46,7 @@ const DropdownIndicator = (props) => {
         </components.DropdownIndicator>
     );
 };
-const FilterSelect = ({ options, onChange, ...props }) => {
+const FilterSelect: FC<FilterSelectProps> = ({ options, onChange, ...props }) => {
     return (
         <Select
             styles={customStyles}
@@ -44,7 +54,7 @@ const FilterSelect = ({ options, onChange, ...props }) => {
             components={{ DropdownIndicator }}
             options={options}
             isSearchable={false}
-            defaultValue={{ value: null, label: 'Все' }}
+            defaultValue={initialValue}
             placeholder={'Статус'}
             onChange={(val) => {
                 onChange(val);

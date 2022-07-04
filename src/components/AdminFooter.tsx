@@ -1,5 +1,6 @@
+import { FC } from 'react';
 import VskLogo from '../img/vsk-logo.svg';
-const AdminFooter = () => {
+const AdminFooter: FC = () => {
     return (
         <div className="admin-footer">
             <div className="container">

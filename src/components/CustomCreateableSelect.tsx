@@ -1,21 +1,29 @@
+import { FC, RefObject } from "react";
 import { components } from "react-select";
 import CreatableSelect from 'react-select/creatable';
+import Select from "react-select/dist/declarations/src/Select";
+import { selectOption } from "../types/users";
+export interface CustomSelectProps {
+    options: selectOption[]
+    onChange: (value: any) => void
+    innerRef: RefObject<Select>
+}
 const customStyles = {
     indicatorSeparator: () => ({
 
     }),
-    control: (provided) => ({
+    control: (provided: object) => ({
         ...provided,
         minHeight: '50px',
         height: '50px'
     }),
-    dropdownIndicator: (provided) => ({
+    dropdownIndicator: (provided: object) => ({
         ...provided,
         paddingRight: '14.5px'
     })
 };
 
-const DropdownIndicator = (props) => {
+const DropdownIndicator = (props: any) => {
     return (
         <components.DropdownIndicator {...props}>
             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -24,8 +32,9 @@ const DropdownIndicator = (props) => {
         </components.DropdownIndicator>
     );
 };
-const CustomCreateableSelect = ({ options, onChange, innerRef, ...field }) => {
-    const handleChange = (newValue) => {
+const CustomCreateableSelect: FC<CustomSelectProps> = ({ options, onChange, innerRef, ...field }) => {
+    const handleChange = (newValue: any) => {
+        console.log(newValue);
         onChange(newValue);
     };
     return (

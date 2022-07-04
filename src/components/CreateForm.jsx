@@ -8,15 +8,12 @@ import { emailPattern, requiredPattern } from '../functions';
 import { successNotify, failureNotify } from '../notifications';
 import Cookies from 'js-cookie';
 import { useDispatch } from 'react-redux';
-import { passCreateFormData } from '../redux/slices/policeSlice';
-import CustomModal from './CustomModal';
 import { axiosAuth } from '../axios-instances';
 import InputRange from './InputRange';
 const CreateForm = () => {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [parsedData, setParsedData] = useState(null);
-    const [modalIsOpen, setIsOpen] = useState(false);
     const [companyOptions, setCompanyOptions] = useState([
         { value: 'ООО', label: 'ООО' },
         { value: 'ИП', label: 'ИП' },
@@ -98,17 +95,8 @@ const CreateForm = () => {
     const sendData = async (data) => {
         setLoading(true);
         try {
-            const response = await axiosAuth.post('save_policy_lb', data);
-            dispatch(passCreateFormData({
-                limit: parsedData ? parsedData.limit : null,
-                'case-0': parsedData ? parsedData['case-0'] : null,
-                'case-1': parsedData ? parsedData['case-1'] : null,
-                holder: savedFields[0] ? savedFields[0] : null,
-                email: savedFields[1] ? savedFields[1] : null,
-                ...response.data.data
-            }))
+            await axiosAuth.post('save_policy_lb', data);
             successNotify('Успешно');
-            setIsOpen(true);
             setLoading(false);
         } catch (error) {
             setLoading(false);
@@ -670,7 +658,6 @@ const CreateForm = () => {
                     </div>
                 </div>
             </form>
-            <CustomModal modalIsOpen={modalIsOpen} onClose={() => { setIsOpen(false) }} onDelete={(id) => deletePolicy(id)} onSaveClick={(id) => savePolice(id)} />
         </div>
     );
 }

@@ -1,6 +1,6 @@
-import React from 'react';
+import { forwardRef } from 'react';
 import CustomSelect from "./CustomSelect";
-const ParentSelect = React.forwardRef(({ ...rest }, ref) => {
+const ParentSelect = forwardRef<any, any>(({ ...rest }, ref) => {
     return (
         <CustomSelect
             innerRef={ref}

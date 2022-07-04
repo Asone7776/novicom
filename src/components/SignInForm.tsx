@@ -16,13 +16,14 @@ const SignInForm: FC = () => {
     const navigate = useNavigate();
     const currentUser = useAppSelector((state) => state.currentUser);
     const { register, handleSubmit, formState: { errors } } = useForm<loginFormDataTypes>({});
-    useEffect(() => {
-        if (currentUser.success || Cookies.get('token')) {
-            navigate('/admin');
-        }
-    }, [currentUser.success]);
+    // useEffect(() => {
+    //     if (currentUser.success || Cookies.get('token')) {
+    //         navigate('/admin');
+    //     }
+    // }, [currentUser.success]);
     const onSubmit = (data: loginData) => {
-        dispatch(login(data));
+        navigate('/admin/new');
+        // dispatch(login(data));
     };
     return (
         <div className="sign-in-form">

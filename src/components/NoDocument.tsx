@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import AddDocument from '../img/document-add.svg';
 import { useNavigate } from 'react-router-dom';
-const NoDocument = () => {
+const NoDocument: FC = () => {
     const navigate = useNavigate();
     return (
         <div className="no-document">
