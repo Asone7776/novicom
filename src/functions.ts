@@ -7,7 +7,7 @@ export const emailPattern = {
     value: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     message: 'Введите корректный e-mail'
 }
-export const formatPrice = (price) => {
+export const formatPrice = (price: number | string) => {
     const n = String(price),
         p = n.indexOf('.');
 
@@ -18,45 +18,16 @@ export const formatPrice = (price) => {
 };
 
 
-export function openBase64NewTab(base64Pdf) {
-    var blob = base64toBlob(base64Pdf);
-    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-        window.navigator.msSaveOrOpenBlob(blob, "pdfBase64.pdf");
-    } else {
-        const blobUrl = URL.createObjectURL(blob);
-        window.open(blobUrl, '_self');
-    }
-}
 
-function base64toBlob(base64Data) {
-    const sliceSize = 1024;
-    const byteCharacters = atob(base64Data);
-    const bytesLength = byteCharacters.length;
-    const slicesCount = Math.ceil(bytesLength / sliceSize);
-    const byteArrays = new Array(slicesCount);
-
-    for (let sliceIndex = 0; sliceIndex < slicesCount; ++sliceIndex) {
-        const begin = sliceIndex * sliceSize;
-        const end = Math.min(begin + sliceSize, bytesLength);
-
-        const bytes = new Array(end - begin);
-        for (let offset = begin, i = 0; offset < end; ++i, ++offset) {
-            bytes[i] = byteCharacters[offset].charCodeAt(0);
-        }
-        byteArrays[sliceIndex] = new Uint8Array(bytes);
-    }
-    return new Blob(byteArrays, { type: "application/pdf" });
-}
-
-export const formatDate = date => {
+export const formatDate = (date: string) => {
     let modifiedDate = moment(date).format('DD.MM.yyyy HH:mm');
     return modifiedDate;
 }
 
-export const debounce = (func, wait, immediate) => {
-    let timeout;
+export const debounce = (func: any, wait: number, immediate: boolean) => {
+    let timeout: ReturnType<typeof setTimeout> | null = null;
 
-    return function executedFunction() {
+    return function executedFunction(this: any) {
         const context = this;
         const args = arguments;
 
@@ -67,7 +38,9 @@ export const debounce = (func, wait, immediate) => {
 
         const callNow = immediate && !timeout;
 
-        clearTimeout(timeout);
+        if (timeout) {
+            clearTimeout(timeout);
+        }
 
         timeout = setTimeout(later, wait);
 
@@ -75,11 +48,11 @@ export const debounce = (func, wait, immediate) => {
     };
 };
 
-export const withDebounce = debounce((action) => {
+export const withDebounce = debounce((action: () => void) => {
     action();
 }, 300, false);
 
-export const getStatusName = (id) => {
+export const getStatusName = (id: number) => {
 
     let statusName = '';
     switch (id) {

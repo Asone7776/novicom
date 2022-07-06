@@ -2,12 +2,20 @@ import React, { FC } from 'react';
 import VskLogo from '../img/vsk-logo.svg';
 import Quit from '../img/exit.svg';
 import NavBtn from './NavBtn';
+import Cookies from 'js-cookie';
+import { useAppDispatch } from '../redux/store';
+import { resetUser } from '../redux/slices/userSlice';
 const SidebarFooter: FC = () => {
+    const dispatch = useAppDispatch()
+    const logout = () => {
+        Cookies.remove('token');
+        dispatch(resetUser());
+    }
     return (
         <>
             <div className="divider"></div>
             <div className="sidebar-footer">
-                <NavBtn onClick={() => { }} title='Выйти' icon={Quit} />
+                <NavBtn onClick={logout} title='Выйти' icon={Quit} />
                 <div className="vsk-logo">
                     <img src={VskLogo} alt="vsk-logo" />
                 </div>

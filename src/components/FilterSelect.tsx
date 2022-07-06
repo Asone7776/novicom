@@ -15,8 +15,6 @@ const customStyles = {
     }),
     control: (provided: object) => ({
         ...provided,
-        minHeight: '44px',
-        height: '44px',
         border: 'none'
     }),
     dropdownIndicator: (provided: object) => ({
@@ -25,15 +23,12 @@ const customStyles = {
     }),
     valueContainer: (provided: object) => ({
         ...provided,
-        height: '44px',
     }),
     indicatorsContainer: (provided: object) => ({
         ...provided,
-        height: '44px',
     }),
     input: (provided: object) => ({
         ...provided,
-        height: '35px',
     })
 };
 
@@ -51,6 +46,7 @@ const FilterSelect: FC<FilterSelectProps> = ({ options, onChange, ...props }) =>
         <Select
             styles={customStyles}
             className={'filter-select'}
+            classNamePrefix={'react-select-prefix'}
             components={{ DropdownIndicator }}
             options={options}
             isSearchable={false}

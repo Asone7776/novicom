@@ -294,6 +294,28 @@ html * {
             opacity: 0.5;
         }
     }
+    &.btn-primary-tinned {
+        background: $tinned-primary;
+        border-radius: rem(4);
+        border: none;
+        padding-top: rem(10);
+        padding-bottom: rem(10);
+        padding-left: rem(20);
+        padding-right: rem(20);
+        color: $primary-color !important;
+        border: none;
+        font: {
+            family: "Open Sans SemiBold";
+            size: rem(16);
+        }
+        &:hover,
+        &:focus {
+            background: darken($tinned-primary, 10);
+        }
+        &:disabled {
+            opacity: 0.5;
+        }
+    }
     &.btn-primary-transparent {
         background: transparent;
         border-radius: rem(4);
@@ -964,18 +986,11 @@ p {
         }
         .pre-price {
             font: {
-                family: "PT Sans Bold";
-                size: rem(32);
+                family: "Open Sans";
+                size: rem(36);
             }
-            color: $secondary-color;
+            color: $black;
             margin-bottom: rem(15);
-        }
-    }
-    &.complete {
-        .info-block {
-            .pre-price {
-                color: $black;
-            }
         }
     }
 }
@@ -1290,5 +1305,8 @@ p {
             margin-bottom: rem(30);
         }
     }
+}
+.react-select-prefix__control {
+    height: rem(44);
 }
 @import "responsive";

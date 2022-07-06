@@ -88,7 +88,6 @@ const TodayOrders: FC = () => {
             updated_at: "2022-06-29T09:38:17.000000Z"
         },
     ];
-
     return (
         <div className='today-orders'>
             <div className="row h-100">

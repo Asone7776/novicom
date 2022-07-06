@@ -5,16 +5,15 @@ import ParentCreateSelect from './ParentCreateSelect';
 import InfoCardCreate from './InfoCardCreate';
 import NumberFormat from 'react-number-format';
 import { emailPattern, requiredPattern } from '../functions';
-import { successNotify, failureNotify } from '../notifications';
-import Cookies from 'js-cookie';
-import { useDispatch } from 'react-redux';
-import { axiosAuth } from '../axios-instances';
 import InputRange from './InputRange';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import { createFormData, sendCreateFormData } from '../types/polices';
+import { selectOption } from '../types/users';
+
 const CreateForm = () => {
-    const dispatch = useDispatch();
-    const [loading, setLoading] = useState(false);
-    const [parsedData, setParsedData] = useState(null);
-    const [companyOptions, setCompanyOptions] = useState([
+    const dispatch = useAppDispatch();
+    const police = useAppSelector(state => state.police);
+    const [companyOptions, setCompanyOptions] = useState<selectOption[]>([
         { value: 'ООО', label: 'ООО' },
         { value: 'ИП', label: 'ИП' },
         { value: 'АО', label: 'АО' },
@@ -28,7 +27,7 @@ const CreateForm = () => {
         { value: '1', label: 'Мужской' },
         { value: '2', label: 'Женский' }
     ];
-    const { control, setValue, watch, register, handleSubmit, formState: { errors } } = useForm({
+    const { control, setValue, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
         defaultValues: {
             holder: { value: '0', label: 'Физическое лицо' },
             male: { value: '1', label: 'Мужской' },
@@ -38,23 +37,12 @@ const CreateForm = () => {
         }
     });
 
-    useEffect(() => {
-        let preData = Cookies.get('pre-data');
-        if (preData) {
-            setParsedData(JSON.parse(preData));
-        }
-    }, []);
-    useEffect(() => {
-        if (parsedData && parsedData.holder) {
-            setValue('holder', parsedData.holder);
-        }
-    }, [parsedData]);
     const allFields = watch();
     const savedFields = watch(['holder', 'email']);
     const prefix = watch(['organization_prefix']);
     useEffect(() => {
         if (prefix[0] && prefix[0].__isNew__) {
-            setCompanyOptions((prevState) => {
+            setCompanyOptions((prevState: any) => {
                 let array = [
                     ...prevState,
                     prefix[0]
@@ -63,13 +51,9 @@ const CreateForm = () => {
             })
         }
     }, [prefix[0]])
-    const onSubmit = data => {
+    const onSubmit = (data: createFormData) => {
         const objectToSend = {
             ...data,
-            limit: parsedData ? parsedData.limit : null,
-            'case-0': parsedData ? parsedData['case-0'] : null,
-            'case-1': parsedData ? parsedData['case-1'] : null,
-            term: parsedData ? parsedData.term : null,
             holder: data.holder.value,
             male: data.male.value,
         };
@@ -90,46 +74,9 @@ const CreateForm = () => {
             }
         }
         delete objectToSend.organization_prefix;
-        sendData(objectToSend);
+        console.log(objectToSend);
+        // sendData(objectToSend);
     };
-    const sendData = async (data) => {
-        setLoading(true);
-        try {
-            await axiosAuth.post('save_policy_lb', data);
-            successNotify('Успешно');
-            setLoading(false);
-        } catch (error) {
-            setLoading(false);
-            if (error.response.data) {
-                failureNotify(error.response.data.errors);
-            }
-        }
-    }
-
-    const savePolice = async (id) => {
-        try {
-            const response = await axiosAuth.get(`orders/send/${id}`);
-            setIsOpen(false);
-            successNotify(response.data.data);
-        } catch (error) {
-            setIsOpen(false);
-            if (error.response.data) {
-                failureNotify(error.response.data.errors);
-            }
-        }
-    }
-    const deletePolicy = async (id) => {
-        try {
-            const response = await axiosAuth.delete(`orders/${id}`);
-            setIsOpen(false);
-            successNotify(response.data.data);
-        } catch (error) {
-            setIsOpen(false);
-            if (error.response.data) {
-                failureNotify(error.response.data.errors);
-            }
-        }
-    }
     return (
         <div className="pre-form create-form">
             <form onSubmit={handleSubmit(onSubmit)}>
@@ -149,7 +96,6 @@ const CreateForm = () => {
                                         render={({ field }) => {
                                             return (
                                                 <ParentSelect
-                                                    name="holder"
                                                     options={options}
                                                     {...field}
                                                 />
@@ -168,7 +114,6 @@ const CreateForm = () => {
                                                     render={({ field }) => {
                                                         return (
                                                             <ParentCreateSelect
-                                                                name="organization_prefix"
                                                                 options={companyOptions}
                                                                 {...field}
                                                             />
@@ -332,7 +277,6 @@ const CreateForm = () => {
                                         render={({ field }) => {
                                             return (
                                                 <ParentSelect
-                                                    name="male"
                                                     options={maleOptions}
                                                     {...field}
                                                 />
@@ -654,7 +598,7 @@ const CreateForm = () => {
                         </div>
                     </div>
                     <div className="col-4">
-                        <InfoCardCreate holder={savedFields[0]} data={parsedData} complete={true} loading={loading} />
+                        <InfoCardCreate holder={savedFields[0]} loading={police.loading} />
                     </div>
                 </div>
             </form>

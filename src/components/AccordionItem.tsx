@@ -37,7 +37,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                 <div className="collapsed" data-toggle="collapse" data-target={`#collapse-${item.id}`} aria-expanded="true" aria-controls={`collapse-${item.id}`} onClick={onToggle}>
                     <div className="row">
                         <div className="col id">
-                            ID {item.policy_number}
+                            {item.policy_number}
                         </div>
                         <div className="col col-3 risk text-right">
                             {risk}

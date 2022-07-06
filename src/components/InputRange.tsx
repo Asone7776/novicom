@@ -4,11 +4,11 @@ import { formatPrice } from '../functions';
 interface InputRangeProps {
     suffix: string
     needToFormat: boolean
-    min: number
-    max: number
+    min: string | number
+    max: string | number
     onChange: (event: ChangeEvent) => void
     defaultValue: number
-    step: string | number
+    step: string
 }
 
 const InputRange = forwardRef<any, InputRangeProps>(({ suffix, needToFormat, min, max, onChange, defaultValue, step, ...rest }, ref) => {
@@ -23,11 +23,11 @@ const InputRange = forwardRef<any, InputRangeProps>(({ suffix, needToFormat, min
     useEffect(() => {
         if (defaultValue) {
             setCurrentValue(defaultValue);
-            changeBg(defaultValue);
+            changeBg(Number(defaultValue));
         }
     }, [defaultValue]);
     const changeBg = (val: number) => {
-        setBgSize((val - min) * 100 / (max - min) + '% 100%');
+        setBgSize((val - Number(min)) * 100 / (Number(max) - Number(min)) + '% 100%');
     }
     return (
         <div className='custom-range-input'>
