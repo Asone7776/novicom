@@ -4,7 +4,7 @@ import { usersInitialStateType } from "../../types/users";
 
 const initialState: usersInitialStateType = {
     loading: false,
-    data: null,
+    data: [],
     error: null
 }
 
@@ -15,7 +15,7 @@ const usersSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getUsers.pending, (state) => {
             state.loading = true;
-            state.data = null;
+            state.data = [];
             state.error = null;
         })
         builder.addCase(getUsers.fulfilled, (state, action) => {
@@ -25,7 +25,7 @@ const usersSlice = createSlice({
         })
         builder.addCase(getUsers.rejected, (state, action) => {
             state.loading = false
-            state.data = null
+            state.data = []
             state.error = action.payload
         })
     },

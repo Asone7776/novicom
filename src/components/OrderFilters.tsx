@@ -1,13 +1,21 @@
-import React, { useState, useEffect } from "react";
+import { ChangeEvent, FC, useState, } from "react";
 import FilterSelect from "./FilterSelect";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { withDebounce } from '../functions';
 import { setDefaultLocale } from "react-datepicker";
 import ru from 'date-fns/locale/ru';
+import { selectOption } from "../types/users";
 setDefaultLocale('ru');
-const OrderFilters = ({ users, onFilterChange, onDateRange }) => {
-    const [dateRange, setDateRange] = useState([null, null]);
+type DateInterface = Date | null;
+
+interface OrderFiltersProps {
+    users: selectOption[] | []
+    onFilterChange: (param: string, value: any) => void
+    onDateRange: (date: DateInterface[]) => void
+}
+const OrderFilters: FC<OrderFiltersProps> = ({ users, onFilterChange, onDateRange }) => {
+    const [dateRange, setDateRange] = useState<DateInterface[]>([null, null]);
     const [startDate, endDate] = dateRange;
 
     const statuses = [
@@ -17,7 +25,7 @@ const OrderFilters = ({ users, onFilterChange, onDateRange }) => {
         { value: 0, label: 'Не оплачено' },
         { value: 3, label: 'Оплачено' },
     ];
-    const onSearchChange = (event) => {
+    const onSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
         const search = event.target.value;
         if (search.length >= 3 || search.length === 0) {
             withDebounce(() => {
@@ -64,12 +72,12 @@ const OrderFilters = ({ users, onFilterChange, onDateRange }) => {
                 </div>
                 <div className="col-12 mb-3">
                     <FilterSelect
-                        defaultValue={[]}
                         placeholder={'Пользователи'}
-                        isMulti options={users.data} onChange={(val) => {
+                        isMulti
+                        options={users} onChange={(val) => {
                             let valueToSend = null
                             if (val.length > 0) {
-                                valueToSend = val.map((item) => item.value).join();
+                                valueToSend = val.map((item: selectOption) => item.value).join();
                             }
                             onFilterChange('users', valueToSend);
                         }} />

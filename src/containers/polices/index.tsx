@@ -62,7 +62,7 @@ const PolicyPage: FC = () => {
                         <div className="top-heading">
                             <h3>История</h3>
                         </div>
-                        <OrderFilters users={users} onFilterChange={onTopFiltersChange} onDateRange={onDateRange} />
+                        <OrderFilters users={users.data} onFilterChange={onTopFiltersChange} onDateRange={onDateRange} />
                         {/* <Accordion loading={orders.loading} list={orders.data.data} />
                         {orders.data.total > 20 && (
                             <OrdersPagination last_page={orders.data.last_page} onFilterChange={onFilterChange} initialPage={filterProps.page} />

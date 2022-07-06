@@ -2,8 +2,11 @@ import { FC } from "react";
 import Select, { components } from "react-select";
 import { selectOption } from "../types/users";
 interface FilterSelectProps {
-    options: selectOption[]
-    onChange: (value: any) => void
+    options: selectOption[] | []
+    onChange: (value: any) => void,
+    placeholder?: string
+    isMulti?: boolean
+    rest?: any
 }
 const initialValue: selectOption = {
     label: 'Все',

@@ -9,12 +9,12 @@ export interface userListObject {
 }
 export interface selectOption {
     label: string | null
-    value: string | null
+    value: string | null | number
     __isNew__?: boolean
 }
 
 export type usersInitialStateType = {
     loading: boolean
-    data: selectOption[] | null
+    data: selectOption[] | []
     error: any
 }

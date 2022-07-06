@@ -27,13 +27,13 @@ export const formatDate = (date: string) => {
 export const debounce = (func: any, wait: number, immediate: boolean) => {
     let timeout: ReturnType<typeof setTimeout> | null = null;
 
-    return function executedFunction(this: any) {
-        const context = this;
-        const args = arguments;
+    return (...rest: any) => {
+        const context: any = this;
+
 
         const later = function () {
             timeout = null;
-            if (!immediate) func.apply(context, args);
+            if (!immediate) func.apply(context, rest);
         };
 
         const callNow = immediate && !timeout;
@@ -44,11 +44,11 @@ export const debounce = (func: any, wait: number, immediate: boolean) => {
 
         timeout = setTimeout(later, wait);
 
-        if (callNow) func.apply(context, args);
+        if (callNow) func.apply(context, rest);
     };
 };
 
-export const withDebounce = debounce((action: () => void) => {
+export const withDebounce = debounce((action: any) => {
     action();
 }, 300, false);
 
