@@ -7,7 +7,7 @@ import { OrderItem } from "../types/orders";
 
 interface AccordionProps {
     loading: boolean
-    list: OrderItem[]
+    list: OrderItem[] | []
 }
 const Accordion: FC<AccordionProps> = ({ loading, list }) => {
     const dispatch = useAppDispatch();

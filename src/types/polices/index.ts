@@ -1,11 +1,20 @@
 import { selectOption } from "../users"
+import { OrderData } from "../orders"
 
 export interface policeInitialStateType {
-    loading: boolean
-    data: null
-    error: any
+    savedPolicy: {
+        loading: boolean
+        data: OrderData | null
+        error: any
+        success: boolean
+    },
+    updatedPolicy: {
+        loading: boolean
+        error: any
+        success: boolean
+    },
+    holdedPolice: OrderData | null
 }
-
 export interface createFormData {
     surname: string
     first_name: string
@@ -24,7 +33,7 @@ export interface createFormData {
     street: string
     house: number
     flat: number
-    building:string
+    building: string
     index: string
     second_city?: string
     second_street?: string
@@ -44,13 +53,29 @@ export interface createFormData {
     organization_name?: string
     organization_prefix?: selectOption
     holder: selectOption
-    male: selectOption
+    male: any
     inn?: number
     kpp?: number
     ogrn?: number
+    risk: any
+    region: string
+    birthday: Date | string
+    passport_date_issue: Date | string
+    sum: number
+    credit_date: Date | string
 }
 
 export interface sendCreateFormData extends Omit<createFormData, 'holder' | 'male'> {
     holder: number
     male: number
+}
+export interface PolicyFilterProps {
+    paginated: boolean
+    page: number
+    from?: string | null
+    to?: string | null
+    today?: boolean
+    search?: string
+    users?: any
+    status?: number
 }

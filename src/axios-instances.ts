@@ -2,7 +2,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 export const axiosAuth = axios.create({
-    baseURL: "https://vsk-trust.ru/api/"
+    baseURL: "https://vsk-trust.ru/api/nb"
 });
 
 axiosAuth.interceptors.response.use(
@@ -12,8 +12,8 @@ axiosAuth.interceptors.response.use(
     (error) => {
         let status = (error.response && error.response.status) || 0;
         if (status === 401 && window.location.pathname !== "/") {
-            // Cookies.remove("token");
-            // window.location.href = '/';
+            Cookies.remove("token");
+            window.location.href = '/';
         }
         return Promise.reject(error)
     });
@@ -29,6 +29,6 @@ axiosAuth.interceptors.request.use(function (request) {
 
 
 export const axiosDefault = axios.create({
-    baseURL: "https://vsk-trust.ru/api/"
+    baseURL: "https://vsk-trust.ru/api/nb"
 });
 

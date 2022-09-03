@@ -20,7 +20,6 @@ const OrderFilters: FC<OrderFiltersProps> = ({ users, onFilterChange, onDateRang
 
     const statuses = [
         { value: null, label: 'Все' },
-        { value: 2, label: 'Подтверждено' },
         { value: -1, label: 'Отменено' },
         { value: 0, label: 'Не оплачено' },
         { value: 3, label: 'Оплачено' },

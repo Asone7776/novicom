@@ -1,57 +1,81 @@
 import { useEffect } from 'react';
 import { useForm, Controller } from "react-hook-form";
-import ParentSelect from './ParentSelect';
 import InfoCardCreate from './InfoCardCreate';
 import NumberFormat from 'react-number-format';
 import { emailPattern, requiredPattern } from '../functions';
-import InputRange from './InputRange';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { createFormData } from '../types/polices';
-import { RISKS } from '../constants';
+import { useNavigate, useParams } from 'react-router-dom';
+import { updatePolicy } from '../redux/actions/policeActions';
+import { resetUpdatePolicy } from '../redux/slices/policeSlice';
+import InputRange from './InputRange';
 import DateSelect from './DateSelect';
+import ParentSelect from './ParentSelect';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
-import { resetSaveSuccess } from '../redux/slices/policeSlice';
-import { savePolicy } from '../redux/actions/policeActions';
+import { RISKS } from '../constants';
+import { parse } from 'date-fns'
 
-const CreateForm = () => {
+const maleOptions = [
+    { value: '1', label: 'Мужской' },
+    { value: '2', label: 'Женский' }
+];
+
+const EditForm = () => {
+    const params = useParams();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const police = useAppSelector(state => state.police.savedPolicy);
+    const updatedSuccess = useAppSelector(state => state.police.updatedPolicy);
+    const currentRisk = RISKS.filter(item => item.value === police.data?.order.options.risk);
+    const currentGender = maleOptions.filter(item => item.value === police.data?.order.form.male);
 
-    const maleOptions = [
-        { value: '1', label: 'Мужской' },
-        { value: '2', label: 'Женский' }
-    ];
+
     const { control, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
         defaultValues: {
-            sum: 2000000,
-            risk: RISKS[0],
-            male: { value: '1', label: 'Мужской' },
-            phone: "+7(___)___-__-__"
+            region: police.data && police.data.order.form.region,
+            city: police.data && police.data.order.form.city,
+            street: police.data && police.data.order.form.street,
+            house: police.data && police.data.order.form.house,
+            flat: police.data && police.data.order.form.flat,
+            index: police.data && police.data.order.form.index,
+            surname: police.data && police.data.order.form.surname,
+            first_name: police.data && police.data.order.form.first_name,
+            second_name: police.data && police.data.order.form.second_name,
+            birthday: police.data && police.data.order.form.birthday ? parse(police.data?.order.form.birthday, "yyyy-MM-dd", new Date()) : undefined,
+            passport_series: police.data && police.data.order.form.passport_series,
+            passport_number: police.data && police.data.order.form.passport_number,
+            passport_whom: police.data && police.data.order.form.passport_whom,
+            passport_subvision_code: police.data && police.data.order.form.passport_subvision_code,
+            passport_date_issue: police.data && police.data.order.form.passport_date_issue ? parse(police.data?.order.form.passport_date_issue, "yyyy-MM-dd", new Date()) : undefined,
+            credit_number: police.data && police.data.order.form.credit_number,
+            credit_date: police.data && police.data.order.form.credit_date ? parse(police.data?.order.form.passport_date_issue, "yyyy-MM-dd", new Date()) : undefined,
+            male: police.data && police.data.order.form.male ? currentGender[0] : null,
+            risk: police.data && police.data.order.options.risk ? currentRisk[0] : null,
+            sum: police.data && police.data.order.limit_amount,
+            email: police.data && police.data.order.email,
+            phone: police.data && police.data.order.phone,
         }
     });
 
     const savedFields = watch(['sum', 'surname', 'first_name', 'second_name', 'risk']);
-
     useEffect(() => {
-        if (police.success) {
-            dispatch(resetSaveSuccess());
-            navigate('/admin/new/complete');
+        if (updatedSuccess.success) {
+            dispatch(resetUpdatePolicy());
+            navigate('/admin/new');
         }
-    }, [police]);
-
+    }, [updatedSuccess.success]);
     const onSubmit = (data: createFormData) => {
         const objectToSend = {
             ...data,
+            id: params.id,
             male: data.male.value,
             risk: data.risk ? data.risk.value : null,
             birthday: data.birthday ? moment(data.birthday).format('Y-MM-DD') : null,
             credit_date: data.credit_date ? moment(data.credit_date).format('DD.MM.Y') : null,
             passport_date_issue: data.passport_date_issue ? moment(data.passport_date_issue).format('Y-MM-DD') : null,
         };
-        console.log(objectToSend);
-        dispatch(savePolicy(objectToSend));
+
+        dispatch(updatePolicy(objectToSend));
     };
     return (
         <div className="pre-form create-form">
@@ -60,7 +84,7 @@ const CreateForm = () => {
                     <div className="col-8 small-gutters">
                         <div className="card custom-card">
                             <h4>Страховая сумма</h4>
-                            <InputRange step={'500000'} suffix={''} needToFormat={true} defaultValue={2000000} min={500000} max={3000000} {...register('sum')} />
+                            <InputRange step={'50000'} suffix={''} needToFormat={true} defaultValue={police.data && police.data.order.limit_amount} min={500000} max={3000000} {...register('sum')} />
                         </div>
                         <div className="card custom-card">
                             <div className="card-body">
@@ -293,7 +317,7 @@ const CreateForm = () => {
                         </div>
                     </div>
                     <div className="col-4">
-                        <InfoCardCreate data={savedFields} loading={police.loading} />
+                        <InfoCardCreate data={savedFields} loading={updatedSuccess.loading} />
                     </div>
                 </div>
             </form>
@@ -301,4 +325,4 @@ const CreateForm = () => {
     );
 }
 
-export default CreateForm;
+export default EditForm;

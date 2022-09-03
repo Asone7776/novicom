@@ -8,21 +8,22 @@ export const getOrders = createAsyncThunk(
         const response = await axiosAuth.get('orders', {
             params
         });
-        return response.data;
+        return response.data.data;
     }
 );
 
 export const changeStatus = createAsyncThunk(
     "orders/changeStatus",
     async (params: updateStatusObject, { rejectWithValue }) => {
+        const { order_id, ...fields } = params;
         try {
-            const response = await axiosAuth.patch(`orders`, params);
+            const response = await axiosAuth.patch(`orders/${order_id}`, fields);
             successNotify(response.data.data);
             return response.data.data;
         } catch (error: any) {
-            if (error.response.data && error.response.data.error) {
-                failureNotify(error.response.data.error);
-                return rejectWithValue(error.response.data.error);
+            if (error.response.data && error.response.data.errors) {
+                failureNotify(error.response.data.errors);
+                return rejectWithValue(error.response.data.errors);
             }
             return rejectWithValue(error);
         }

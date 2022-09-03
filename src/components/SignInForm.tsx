@@ -16,14 +16,13 @@ const SignInForm: FC = () => {
     const navigate = useNavigate();
     const currentUser = useAppSelector((state) => state.currentUser);
     const { register, handleSubmit, formState: { errors } } = useForm<loginFormDataTypes>({});
-    // useEffect(() => {
-    //     if (currentUser.success || Cookies.get('token')) {
-    //         navigate('/admin');
-    //     }
-    // }, [currentUser.success]);
+    useEffect(() => {
+        if (currentUser.success || Cookies.get('token')) {
+            navigate('/admin');
+        }
+    }, [currentUser.success]);
     const onSubmit = (data: loginData) => {
-        navigate('/admin/new');
-        // dispatch(login(data));
+        dispatch(login(data));
     };
     return (
         <div className="sign-in-form">
@@ -31,10 +30,10 @@ const SignInForm: FC = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                     <label>Ваш e-mail</label>
-                    <input placeholder="e-mail" className="form-control email-form-control" {...register("email", {
+                    <input placeholder="e-mail" className="form-control email-form-control" {...register("login", {
                         required: requiredPattern, pattern: emailPattern
                     })} />
-                    {errors.email && <span className="error-message">{errors.email.message}</span>}
+                    {errors.login && <span className="error-message">{errors.login.message}</span>}
                 </div>
                 <div className="form-group">
                     <label>Пароль</label>

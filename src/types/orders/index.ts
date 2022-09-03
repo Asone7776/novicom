@@ -29,10 +29,18 @@ export interface OrderItem {
     updated_at: string
 }
 
+export interface OrderData {
+    invoice_url: any
+    order: any
+    current_page: number
+    total: number
+    last_page: number
+    data: OrderItem[] | []
+}
 
 export interface OrdersInitialState {
     loading: boolean
-    data: OrderItem[] | []
+    data: OrderData | null
     error: any
     changeStatus: {
         loading: boolean

@@ -8,8 +8,8 @@ export interface userListObject {
     updated_at: string
 }
 export interface selectOption {
-    label: string | null
-    value: string | null | number
+    label?: string | null
+    value?: string | null | number
     __isNew__?: boolean
 }
 

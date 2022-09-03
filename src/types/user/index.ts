@@ -17,6 +17,6 @@ export interface userInitialStateType {
 }
 
 export interface loginData {
-    email: string,
+    login: string,
     password: string
 }

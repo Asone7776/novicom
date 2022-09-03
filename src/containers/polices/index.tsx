@@ -1,19 +1,20 @@
-import React, { FC, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { FC, useState, useEffect } from "react";
+import moment from "moment";
 import Accordion from "../../components/Accordion";
-import { useEffect } from "react";
 import { getOrders } from "../../redux/actions/orderActions";
 import OrderFilters from '../../components/OrderFilters';
 import { getUsers } from "../../redux/actions/usersActions";
 import OrdersPagination from "../../components/OrdersPagination";
 import { resetStatus } from '../../redux/slices/orderSlice';
 import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { PolicyFilterProps } from "../../types/polices";
+import { axiosAuth } from "../../axios-instances";
+import { failureNotify, successNotify } from "../../notifications";
 const PolicyPage: FC = () => {
     const dispatch = useAppDispatch();
     const orders = useAppSelector((state) => state.orders);
     const users = useAppSelector((state) => state.users);
-    const navigate = useNavigate();
-    const [filterProps, setFilterProps] = useState<any>({
+    const [filterProps, setFilterProps] = useState<PolicyFilterProps>({
         paginated: true,
         page: 1
     });
@@ -22,7 +23,7 @@ const PolicyPage: FC = () => {
     }, [filterProps, orders.changeStatus.success]);
 
     useEffect(() => {
-        // dispatch(getUsers());
+        dispatch(getUsers());
     }, []);
     useEffect(() => {
         if (orders.changeStatus.success) {
@@ -40,8 +41,8 @@ const PolicyPage: FC = () => {
         setFilterProps({
             ...filterProps,
             page: 1,
-            from: arr[0] ? arr[0] : null,
-            to: arr[1] ? arr[1] : null,
+            from: arr[0] ? moment(arr[0]).format('DD.MM.YYYY') : null,
+            to: arr[1] ? moment(arr[1]).format('DD.MM.YYYY') : null
         })
     };
 
@@ -63,10 +64,10 @@ const PolicyPage: FC = () => {
                             <h3>История</h3>
                         </div>
                         <OrderFilters users={users.data} onFilterChange={onTopFiltersChange} onDateRange={onDateRange} />
-                        {/* <Accordion loading={orders.loading} list={orders.data.data} />
-                        {orders.data.total > 20 && (
+                        <Accordion loading={orders.loading} list={orders.data && orders.data.data ? orders.data.data : []} />
+                        {orders.data && orders.data.total > 20 && (
                             <OrdersPagination last_page={orders.data.last_page} onFilterChange={onFilterChange} initialPage={filterProps.page} />
-                        )} */}
+                        )}
                     </div>
                 </div>
             </div>

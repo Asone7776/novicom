@@ -53,7 +53,6 @@ const FilterSelect: FC<FilterSelectProps> = ({ options, onChange, ...props }) =>
             components={{ DropdownIndicator }}
             options={options}
             isSearchable={false}
-            defaultValue={initialValue}
             placeholder={'Статус'}
             onChange={(val) => {
                 onChange(val);

@@ -6,11 +6,11 @@ import { useAppDispatch } from "./redux/store";
 import { useEffect } from "react";
 const App: FC = () => {
   const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   if (Cookies.get('token')) {
-  //     dispatch(getCurrentUser());
-  //   }
-  // }, [dispatch]);
+  useEffect(() => {
+    if (Cookies.get('token')) {
+      dispatch(getCurrentUser());
+    }
+  }, [dispatch]);
   return (
     <RoutesComponent />
   )

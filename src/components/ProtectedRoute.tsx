@@ -1,16 +1,13 @@
 import { FC, ReactElement } from "react";
 import Cookies from "js-cookie";
 import { Navigate, Outlet } from "react-router-dom";
-import { userObject } from '../types/user/index';
 
 interface ProtectedRouteProps {
-    user: userObject
     redirectPath?: string
-    children: ReactElement | null
+    children?: ReactElement | null
 }
 
 const ProtectedRoute: FC<ProtectedRouteProps> = ({
-    user,
     redirectPath = '/',
     children
 }) => {

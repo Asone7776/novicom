@@ -4,6 +4,8 @@
 @import "./input-range";
 @import "./checkbox";
 @import "./spinner";
+@import "./pdf-pagination";
+@import "./tabs";
 
 //Helpers
 .text-left {
@@ -1308,5 +1310,16 @@ p {
 }
 .react-select-prefix__control {
     height: rem(44);
+}
+.create-form {
+    .react-select-prefix__control {
+        height: rem(50);
+    }
+}
+.react-pdf__Page__annotations.annotationLayer {
+    display: none;
+}
+.react-pdf__Document {
+    margin-bottom: rem(24);
 }
 @import "responsive";

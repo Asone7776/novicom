@@ -3,7 +3,7 @@ import { getOrders, changeStatus } from '../actions/orderActions';
 import { OrdersInitialState } from "../../types/orders";
 const initialState: OrdersInitialState = {
     loading: false,
-    data: [],
+    data: null,
     error: null,
     changeStatus: {
         loading: false,
@@ -28,7 +28,7 @@ const ordersSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(getOrders.pending, (state) => {
             state.loading = true;
-            state.data = [];
+            state.data = null;
             state.error = null;
         })
         builder.addCase(getOrders.fulfilled, (state, action) => {
@@ -38,7 +38,7 @@ const ordersSlice = createSlice({
         })
         builder.addCase(getOrders.rejected, (state, action) => {
             state.loading = false;
-            state.data = [];
+            state.data = null;
             state.error = action.payload;
         })
         builder.addCase(changeStatus.pending, (state) => {

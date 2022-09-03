@@ -1,35 +1,15 @@
-import React, { FC, useState, useEffect } from "react";
+import { FC, useState } from "react";
 import cn from "classnames";
 import { formatPrice, formatDate, getStatusName } from "../functions";
-import { OrderItem } from "../types/orders";
+import { RISKS } from '../constants';
 interface AccordionItemProps {
-    item: OrderItem
+    item: any
     onStatusChange: (status: number) => void
 }
 const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
     const [active, setActive] = useState(false);
-    const [risk, setRisk] = useState('Смерть');
     const onToggle = () => {
         setActive(!active);
-    }
-    useEffect(() => {
-        if (item && item.options && item.options.length > 1) {
-            formatRisk(item.options[0].value, item.options[1].value);
-        }
-    }, [item]);
-    const formatRisk = (death: boolean, invalid: boolean) => {
-        if (death && !invalid) {
-            setRisk('Смерть')
-        }
-        if (invalid && !death) {
-            setRisk('Инвалидность')
-        }
-        if (death && invalid) {
-            setRisk('Смерть, Инвалидность');
-        }
-        if (!death && !invalid) {
-            setRisk('Не указан');
-        }
     }
     return (
         <div className="card">
@@ -38,9 +18,6 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                     <div className="row">
                         <div className="col id">
                             {item.policy_number}
-                        </div>
-                        <div className="col col-3 risk text-right">
-                            {risk}
                         </div>
                         <div className="col col-2 date text-center">
                             {item.created_at ? formatDate(item.created_at) : null}
@@ -66,16 +43,16 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                 <div className="card-body">
                     <div className="divider"></div>
                     <div className="row">
-                        <div className="col-5">
+                        <div className="col-3">
                             <div className="item">
                                 <div className="sub-heading">Тип страхования</div>
-                                <div className="heading">{risk}</div>
+                                {item.form && item.form.risk ? RISKS.filter(riskItem => riskItem.value === item.form.risk)[0].label : null}
                             </div>
                         </div>
                         <div className="col-3">
                             <div className="item">
-                                <div className="sub-heading">Срок страхования</div>
-                                <div className="heading">{item.term ? `${item.term} месяцев` : null}</div>
+                                <div className="sub-heading">Стоимость</div>
+                                {item.amount ? `${formatPrice(item.amount)}₽` : null}
                             </div>
                         </div>
                         <div className="col-4">
@@ -95,7 +72,7 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                         <div className="col-3">
                             <div className="item">
                                 <div className="sub-heading">Паспорт</div>
-                                <div className="heading">{item.passport ? item.passport : null}</div>
+                                <div className="heading">{item.form && item.form.passport_number ? item.form.passport_number : null}</div>
                             </div>
                         </div>
                         <div className="col-4">
@@ -115,16 +92,10 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                     </div>
                     <div className="divider"></div>
                     <div className="row">
-                        <div className="col-5">
-                            <div className="item">
-                                <div className="sub-heading">Кредитный договор</div>
-                                <div className="heading">{item.credit_number ? `№${item.credit_number}` : null}</div>
-                            </div>
-                        </div>
                         <div className="col-3">
                             <div className="item">
-                                <div className="sub-heading">Кредитное учереждение</div>
-                                <div className="heading">{item.credit_institution ? item.credit_institution : null}</div>
+                                <div className="sub-heading">Кредитный договор</div>
+                                <div className="heading">{item.form && item.form.credit_number ? `№${item.form.credit_number}` : null}</div>
                             </div>
                         </div>
                         <div className="col-4">

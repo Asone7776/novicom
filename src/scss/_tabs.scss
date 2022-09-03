@@ -1,0 +1,23 @@
+.content .react-tabs__tab-list {
+    border-bottom: 0;
+    margin-bottom: rem(24);
+    .btn {
+        box-shadow: none;
+        min-width: rem(178);
+        font: {
+            family: "PF Sans Pro";
+            size:rem(14);
+        }
+        & + .btn {
+            margin-left: 0;
+        }
+        &:not(:last-child) {
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        &:not(:first-child) {
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+    }
+}

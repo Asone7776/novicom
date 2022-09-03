@@ -5,11 +5,14 @@ import NavBtn from './NavBtn';
 import Cookies from 'js-cookie';
 import { useAppDispatch } from '../redux/store';
 import { resetUser } from '../redux/slices/userSlice';
+import { useNavigate } from 'react-router-dom';
 const SidebarFooter: FC = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch()
     const logout = () => {
         Cookies.remove('token');
         dispatch(resetUser());
+        navigate('/');
     }
     return (
         <>
