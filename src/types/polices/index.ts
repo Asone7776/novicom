@@ -63,6 +63,7 @@ export interface createFormData {
     passport_date_issue: Date | string
     sum: number
     credit_date: Date | string
+    years: number
 }
 
 export interface sendCreateFormData extends Omit<createFormData, 'holder' | 'male'> {

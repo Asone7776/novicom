@@ -20,9 +20,10 @@ export const login = createAsyncThunk(
             successNotify('Вы успешно авторизованы');
             return (response.data.data) as userObject;
         } catch (error: any) {
-            if (error.response.data && error.response.data.error) {
-                failureNotify(error.response.data.error);
-                return rejectWithValue(error.response.data.error);
+            console.log(error.response);
+            if (error.response.data && error.response.data.errors) {
+                failureNotify(error.response.data.errors);
+                return rejectWithValue(error.response.data.errors);
             }
             return rejectWithValue(error);
         }

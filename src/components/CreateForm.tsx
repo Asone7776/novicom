@@ -5,34 +5,35 @@ import InfoCardCreate from './InfoCardCreate';
 import NumberFormat from 'react-number-format';
 import { emailPattern, requiredPattern } from '../functions';
 import InputRange from './InputRange';
+import InputRangeAges from './InputRangeAges';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { createFormData } from '../types/polices';
-import { RISKS } from '../constants';
 import DateSelect from './DateSelect';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { resetSaveSuccess } from '../redux/slices/policeSlice';
+import SearchableSelect from './SearchableSelect';
 import { savePolicy } from '../redux/actions/policeActions';
 
 const CreateForm = () => {
+    const [searchParams] = useSearchParams();
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const police = useAppSelector(state => state.police.savedPolicy);
-
     const maleOptions = [
         { value: '1', label: 'Мужской' },
         { value: '2', label: 'Женский' }
     ];
-    const { control, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
+    const { control, getValues, setValue, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
         defaultValues: {
             sum: 2000000,
-            risk: RISKS[0],
+            years: 4,
             male: { value: '1', label: 'Мужской' },
             phone: "+7(___)___-__-__"
         }
     });
 
-    const savedFields = watch(['sum', 'surname', 'first_name', 'second_name', 'risk']);
+    const savedFields = watch(['sum', 'surname', 'first_name', 'second_name', 'years']);
 
     useEffect(() => {
         if (police.success) {
@@ -42,15 +43,15 @@ const CreateForm = () => {
     }, [police]);
 
     const onSubmit = (data: createFormData) => {
+        const tariff = searchParams.get('tariff');
         const objectToSend = {
             ...data,
+            tariff: tariff ? tariff : 1,
             male: data.male.value,
-            risk: data.risk ? data.risk.value : null,
             birthday: data.birthday ? moment(data.birthday).format('Y-MM-DD') : null,
             credit_date: data.credit_date ? moment(data.credit_date).format('DD.MM.Y') : null,
             passport_date_issue: data.passport_date_issue ? moment(data.passport_date_issue).format('Y-MM-DD') : null,
         };
-        console.log(objectToSend);
         dispatch(savePolicy(objectToSend));
     };
     return (
@@ -60,34 +61,50 @@ const CreateForm = () => {
                     <div className="col-8 small-gutters">
                         <div className="card custom-card">
                             <h4>Страховая сумма</h4>
-                            <InputRange step={'500000'} suffix={''} needToFormat={true} defaultValue={2000000} min={500000} max={3000000} {...register('sum')} />
+                            <InputRange
+                                withInput={true}
+                                step='10000'
+                                suffix={'₽'}
+                                needToFormat={true}
+                                defaultValue={getValues('sum')}
+                                min={500000}
+                                max={3000000}
+                                onChangeValue={(value) => {
+                                    setValue('sum', value);
+                                }}
+                            />
+                            {/* <InputRange withInput={true} step={'500000'} suffix={''} needToFormat={true} defaultValue={2000000} min={500000} max={3000000} {...register('sum')} /> */}
+                        </div>
+                        <div className="card custom-card">
+                            <h4>Период страхования</h4>
+                            <InputRangeAges step={'1'} suffix={'год'} needToFormat={true} defaultValue={4} min={1} max={7} {...register('years')} />
                         </div>
                         <div className="card custom-card">
                             <div className="card-body">
-                                <div className="form-group">
-                                    <h4>Риск</h4>
-                                    <Controller
-                                        name="risk"
-                                        control={control}
-                                        render={({ field }) => {
-                                            return (
-                                                <ParentSelect
-                                                    options={RISKS}
-                                                    {...field}
-                                                />
-                                            );
-                                        }}
-                                    />
-                                </div>
                                 <div className="row mb-0">
                                     <div className="col-12">
                                         <h5>Адрес</h5>
                                     </div>
                                 </div>
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <input className='form-control' type="text" placeholder='Регион' {...register('region', {
                                         required: requiredPattern
                                     })} />
+                                    {errors.region && <span className="error-message">{errors.region.message}</span>}
+                                </div> */}
+                                <div className="form-group">
+                                    <Controller
+                                        name="region"
+                                        control={control}
+                                        rules={{ required: requiredPattern }}
+                                        render={({ field }) => {
+                                            return (
+                                                <SearchableSelect
+                                                    {...field}
+                                                />
+                                            );
+                                        }}
+                                    />
                                     {errors.region && <span className="error-message">{errors.region.message}</span>}
                                 </div>
                                 <div className="row mb-3">

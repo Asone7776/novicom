@@ -13,7 +13,7 @@ const DateSelect = forwardRef<any, any>(({ value, onChange, ...rest }, ref) => {
             selected={value}
             placeholderText={'Дата'}
             className={'form-control'}
-            dateFormat="Y-MM-dd"
+            dateFormat="dd-MM-yyyy"
             onChange={(date) => {
                 onChange(date);
             }}

@@ -24,3 +24,5 @@ export const tabsTitles = [
     'Полис страхования',
     'Счёт на оплату'
 ];
+
+export const textForms = ['год', 'года', 'лет'];

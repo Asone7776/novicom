@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import cn from "classnames";
-import { formatPrice, formatDate, getStatusName } from "../functions";
-import { RISKS } from '../constants';
+import { formatPrice, formatDate, getStatusName, declOfNum } from "../functions";
+import { textForms } from '../constants';
 interface AccordionItemProps {
     item: any
     onStatusChange: (status: number) => void
@@ -46,7 +46,10 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                         <div className="col-3">
                             <div className="item">
                                 <div className="sub-heading">Тип страхования</div>
-                                {item.form && item.form.risk ? RISKS.filter(riskItem => riskItem.value === item.form.risk)[0].label : null}
+                                {item.form && item.form.tariff === null || item.form.tariff === '1' ?
+                                    'Страхование от потери дохода' :
+                                    'Страхование от несчастных случаев и потери дохода'
+                                }
                             </div>
                         </div>
                         <div className="col-3">
@@ -59,6 +62,12 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                             <div className="item">
                                 <div className="sub-heading">Сумма страхования</div>
                                 {item.limit_amount ? `${formatPrice(item.limit_amount)}₽` : null}
+                            </div>
+                        </div>
+                        <div className="col-2">
+                            <div className="item">
+                                <div className="sub-heading">Срок страхования</div>
+                                {item.form && item.form.years ? `${item.form.years} ${declOfNum(item.form.years, textForms)}` : null}
                             </div>
                         </div>
                     </div>
@@ -102,6 +111,12 @@ const AccordionItem: FC<AccordionItemProps> = ({ item, onStatusChange }) => {
                             <div className="item">
                                 <div className="sub-heading">Адрес</div>
                                 <div className="heading">{item.address ? item.address : null}</div>
+                            </div>
+                        </div>
+                        <div className="col-4">
+                            <div className="item">
+                                <div className="sub-heading">Регион</div>
+                                <div className="heading">{item.form && item.form.region ? item.form.region.name : null}</div>
                             </div>
                         </div>
                     </div>

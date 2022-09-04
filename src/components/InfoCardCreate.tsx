@@ -1,8 +1,10 @@
 import { FC } from "react";
 import cn from "classnames";
-import { formatPrice } from "../functions";
+import { formatPrice, declOfNum } from "../functions";
+import { textForms } from '../constants';
 import Spinner from "./Spinner";
 import { Link } from 'react-router-dom';
+
 interface InfoCardCreateProps {
     loading: boolean
     data?: any
@@ -18,13 +20,13 @@ const InfoCardCreate: FC<InfoCardCreateProps> = ({ loading, data }) => {
                 </div>
                 <div className="divider"></div>
                 <div className="info-block">
-                    <span>Лимит</span>
+                    <span>Страховая сумма</span>
                     <h4>{data && data[0] ? formatPrice(data[0]) : '-'}</h4>
                 </div>
                 <div className="divider"></div>
                 <div className="info-block">
-                    <span>Страховой риск</span>
-                    <h4>{data && data[4] && data[4].label}</h4>
+                    <span>Период страхования</span>
+                    <h4>{data && data[4] && `${data[4]} ${declOfNum(data[4], textForms)}`}</h4>
                 </div>
                 <div>
                     <button type="submit" disabled={loading} className={cn('btn btn-primary', { 'loading': loading })}>

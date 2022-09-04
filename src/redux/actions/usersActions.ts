@@ -15,9 +15,9 @@ export const getUsers = createAsyncThunk(
             })
             return (customOptions) as selectOption[];
         } catch (error: any) {
-            if (error.response.data && error.response.data.error) {
-                failureNotify(error.response.data.error);
-                return rejectWithValue(error.response.data.error);
+            if (error.response.data && error.response.data.errors) {
+                failureNotify(error.response.data.errors);
+                return rejectWithValue(error.response.data.errors);
             }
             return rejectWithValue(error);
         }
