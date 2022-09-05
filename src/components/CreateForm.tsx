@@ -38,7 +38,7 @@ const CreateForm = () => {
     useEffect(() => {
         if (police.success) {
             dispatch(resetSaveSuccess());
-            navigate('/admin/new/complete');
+            navigate('/admin/new/complete?fromEdit=true');
         }
     }, [police]);
 

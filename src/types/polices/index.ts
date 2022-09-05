@@ -10,6 +10,7 @@ export interface policeInitialStateType {
     },
     updatedPolicy: {
         loading: boolean
+        data: OrderData | null
         error: any
         success: boolean
     },

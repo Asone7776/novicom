@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import CompleteCard from "../../components/CompleteCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { axiosAuth } from "../../axios-instances";
 import { failureNotify, successNotify } from "../../notifications";
 import { resetSavedPolicy } from "../../redux/slices/policeSlice";
@@ -11,9 +11,11 @@ import { tabsTitles } from "../../constants";
 
 
 const CompletePolice: FC = () => {
+    const [searchParams] = useSearchParams();
+    const fromEdit = searchParams.get('fromEdit');
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const police = useAppSelector(state => state.police.savedPolicy.data);
+    const police = useAppSelector(state => fromEdit === 'true' ? state.police.updatedPolicy.data : state.police.savedPolicy.data);
     const [pdfs, setPdfs] = useState<ArrayBufferLike[] | null>(null);
     const [sendLoading, setSendLoading] = useState(false);
     const [cancelLoading, setCancelLoading] = useState(false);
@@ -75,10 +77,7 @@ const CompletePolice: FC = () => {
             <div className="row">
                 <div className="col-12">
                     <div className="top-heading">
-                        <h3>Полис страхования “Карточный сейф”</h3>
-                        <p>
-                            Черновик
-                        </p>
+                        <h3>Полис страхования</h3>
                     </div>
                     <div className="row">
                         <div className="col-8">

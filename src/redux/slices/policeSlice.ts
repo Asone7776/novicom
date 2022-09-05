@@ -10,6 +10,7 @@ const initialState: policeInitialStateType = {
     },
     updatedPolicy: {
         loading: false,
+        data: null,
         error: null,
         success: false
     },
@@ -61,16 +62,19 @@ export const policeSlice = createSlice({
         // Update
         builder.addCase(updatePolicy.pending, (state) => {
             state.updatedPolicy.loading = true;
+            state.updatedPolicy.data = null;
             state.updatedPolicy.error = null;
             state.updatedPolicy.success = false;
         })
-        builder.addCase(updatePolicy.fulfilled, (state) => {
+        builder.addCase(updatePolicy.fulfilled, (state, action) => {
             state.updatedPolicy.loading = false;
+            state.updatedPolicy.data = action.payload;
             state.updatedPolicy.success = true;
             state.updatedPolicy.error = null;
         })
         builder.addCase(updatePolicy.rejected, (state, action) => {
             state.updatedPolicy.loading = false;
+            state.updatedPolicy.data = null;
             state.updatedPolicy.error = action.payload;
             state.updatedPolicy.success = false;
         })

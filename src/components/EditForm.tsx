@@ -61,7 +61,7 @@ const EditForm = () => {
     useEffect(() => {
         if (updatedSuccess.success) {
             dispatch(resetUpdatePolicy());
-            navigate('/admin/new');
+            navigate('/admin/new/complete?fromEdit=true');
         }
     }, [updatedSuccess.success]);
     const onSubmit = (data: createFormData) => {
