@@ -19,6 +19,11 @@ const CompletePolice: FC = () => {
     const [pdfs, setPdfs] = useState<ArrayBufferLike[] | null>(null);
     const [sendLoading, setSendLoading] = useState(false);
     const [cancelLoading, setCancelLoading] = useState(false);
+    useEffect(()=>{
+        if(!police){
+            navigate('/admin/new');
+        }
+    },[police]);
     const sendToInsurer = async () => {
         setSendLoading(true);
         try {

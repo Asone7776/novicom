@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 
 interface CurrentUserProps {
     title: string
-    email: string
+    email: string | null
 }
 
 const CurrentUser: FC<CurrentUserProps> = ({ title, email }) => {

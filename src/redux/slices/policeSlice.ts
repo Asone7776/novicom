@@ -65,10 +65,12 @@ export const policeSlice = createSlice({
             state.updatedPolicy.data = null;
             state.updatedPolicy.error = null;
             state.updatedPolicy.success = false;
+            // saved fields update also for edit
         })
         builder.addCase(updatePolicy.fulfilled, (state, action) => {
             state.updatedPolicy.loading = false;
             state.updatedPolicy.data = action.payload;
+            state.savedPolicy.data = action.payload;
             state.updatedPolicy.success = true;
             state.updatedPolicy.error = null;
         })
@@ -77,6 +79,7 @@ export const policeSlice = createSlice({
             state.updatedPolicy.data = null;
             state.updatedPolicy.error = action.payload;
             state.updatedPolicy.success = false;
+            state.savedPolicy.data = null;
         })
     },
 })

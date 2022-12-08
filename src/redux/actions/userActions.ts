@@ -7,7 +7,7 @@ export const getCurrentUser = createAsyncThunk(
     "user/getCurrentUser",
     async () => {
         const response = await axiosAuth.get('user');
-        return (response.data) as userObject;
+        return (response.data.data) as userObject;
     }
 );
 

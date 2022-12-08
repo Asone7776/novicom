@@ -13,7 +13,6 @@ import DateSelect from './DateSelect';
 import ParentSelect from './ParentSelect';
 import moment from 'moment';
 import { parse } from 'date-fns';
-import SearchableSelect from './SearchableSelect';
 import InputRangeAges from './InputRangeAges';
 
 const maleOptions = [
@@ -28,7 +27,6 @@ const EditForm = () => {
     const police = useAppSelector(state => state.police.savedPolicy);
     const updatedSuccess = useAppSelector(state => state.police.updatedPolicy);
     const currentGender = maleOptions.filter(item => item.value === police.data?.order.form.male);
-
 
     const { control, setValue, getValues, watch, register, handleSubmit, formState: { errors } } = useForm<createFormData>({
         defaultValues: {
@@ -54,6 +52,7 @@ const EditForm = () => {
             sum: police.data && police.data.order.limit_amount,
             email: police.data && police.data.order.email,
             phone: police.data && police.data.order.phone,
+            building: police.data && police.data.order.building,
         }
     });
 
@@ -97,7 +96,6 @@ const EditForm = () => {
                                     setValue('sum', value);
                                 }}
                             />
-                            {/* <InputRange withInput={true} step={'500000'} suffix={''} needToFormat={true} defaultValue={2000000} min={500000} max={3000000} {...register('sum')} /> */}
                         </div>
                         <div className="card custom-card">
                             <h4>Период страхования</h4>
@@ -111,18 +109,9 @@ const EditForm = () => {
                                     </div>
                                 </div>
                                 <div className="form-group">
-                                    <Controller
-                                        name="region"
-                                        control={control}
-                                        rules={{ required: requiredPattern }}
-                                        render={({ field }) => {
-                                            return (
-                                                <SearchableSelect
-                                                    {...field}
-                                                />
-                                            );
-                                        }}
-                                    />
+                                    <input className='form-control' type="text" placeholder='Регион' {...register('region', {
+                                        required: requiredPattern
+                                    })} />
                                     {errors.region && <span className="error-message">{errors.region.message}</span>}
                                 </div>
                                 <div className="row mb-3">
@@ -144,7 +133,7 @@ const EditForm = () => {
                                     </div>
                                 </div>
                                 <div className="row mb-3">
-                                    <div className="col-4">
+                                    <div className="col-3">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Дом' {...register('house', {
                                                 required: requiredPattern
@@ -152,7 +141,7 @@ const EditForm = () => {
                                             {errors.house && <span className="error-message">{errors.house.message}</span>}
                                         </div>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-3">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Квартира' {...register('flat', {
                                                 required: requiredPattern
@@ -160,12 +149,20 @@ const EditForm = () => {
                                             {errors.flat && <span className="error-message">{errors.flat.message}</span>}
                                         </div>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-3">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Индекс' {...register('index', {
                                                 required: requiredPattern
                                             })} />
                                             {errors.index && <span className="error-message">{errors.index.message}</span>}
+                                        </div>
+                                    </div>
+                                    <div className="col-3">
+                                        <div className="form-group">
+                                            <input className='form-control' type="text" placeholder='Корпус' {...register('building', {
+                                                required: false
+                                            })} />
+                                            {errors.building && <span className="error-message">{errors.building.message}</span>}
                                         </div>
                                     </div>
                                 </div>
@@ -250,7 +247,11 @@ const EditForm = () => {
                                     <div className="col-4">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Серия' {...register('passport_series', {
-                                                required: requiredPattern
+                                                required: requiredPattern,
+                                                maxLength: {
+                                                    value: 4,
+                                                    message: 'Максимальная длина 4'
+                                                }
                                             })} />
                                             {errors.passport_series && <span className="error-message">{errors.passport_series.message}</span>}
                                         </div>
@@ -258,7 +259,11 @@ const EditForm = () => {
                                     <div className="col-8">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Номер' {...register('passport_number', {
-                                                required: requiredPattern
+                                                required: requiredPattern,
+                                                maxLength: {
+                                                    value: 6,
+                                                    message: 'Максимальная длина 6'
+                                                }
                                             })} />
                                             {errors.passport_number && <span className="error-message">{errors.passport_number.message}</span>}
                                         </div>

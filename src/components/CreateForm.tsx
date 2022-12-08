@@ -12,7 +12,6 @@ import DateSelect from './DateSelect';
 import moment from 'moment';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { resetSaveSuccess } from '../redux/slices/policeSlice';
-import SearchableSelect from './SearchableSelect';
 import { savePolicy } from '../redux/actions/policeActions';
 
 const CreateForm = () => {
@@ -38,7 +37,7 @@ const CreateForm = () => {
     useEffect(() => {
         if (police.success) {
             dispatch(resetSaveSuccess());
-            navigate('/admin/new/complete?fromEdit=true');
+            navigate('/admin/new/complete?fromEdit=false');
         }
     }, [police]);
 
@@ -73,7 +72,6 @@ const CreateForm = () => {
                                     setValue('sum', value);
                                 }}
                             />
-                            {/* <InputRange withInput={true} step={'500000'} suffix={''} needToFormat={true} defaultValue={2000000} min={500000} max={3000000} {...register('sum')} /> */}
                         </div>
                         <div className="card custom-card">
                             <h4>Период страхования</h4>
@@ -86,25 +84,10 @@ const CreateForm = () => {
                                         <h5>Адрес</h5>
                                     </div>
                                 </div>
-                                {/* <div className="form-group">
+                                <div className="form-group">
                                     <input className='form-control' type="text" placeholder='Регион' {...register('region', {
                                         required: requiredPattern
                                     })} />
-                                    {errors.region && <span className="error-message">{errors.region.message}</span>}
-                                </div> */}
-                                <div className="form-group">
-                                    <Controller
-                                        name="region"
-                                        control={control}
-                                        rules={{ required: requiredPattern }}
-                                        render={({ field }) => {
-                                            return (
-                                                <SearchableSelect
-                                                    {...field}
-                                                />
-                                            );
-                                        }}
-                                    />
                                     {errors.region && <span className="error-message">{errors.region.message}</span>}
                                 </div>
                                 <div className="row mb-3">
@@ -126,7 +109,7 @@ const CreateForm = () => {
                                     </div>
                                 </div>
                                 <div className="row mb-3">
-                                    <div className="col-4">
+                                    <div className="col-3">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Дом' {...register('house', {
                                                 required: requiredPattern
@@ -134,7 +117,7 @@ const CreateForm = () => {
                                             {errors.house && <span className="error-message">{errors.house.message}</span>}
                                         </div>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-3">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Квартира' {...register('flat', {
                                                 required: requiredPattern
@@ -142,12 +125,20 @@ const CreateForm = () => {
                                             {errors.flat && <span className="error-message">{errors.flat.message}</span>}
                                         </div>
                                     </div>
-                                    <div className="col-4">
+                                    <div className="col-3">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Индекс' {...register('index', {
                                                 required: requiredPattern
                                             })} />
                                             {errors.index && <span className="error-message">{errors.index.message}</span>}
+                                        </div>
+                                    </div>
+                                    <div className="col-3">
+                                        <div className="form-group">
+                                            <input className='form-control' type="text" placeholder='Корпус' {...register('building', {
+                                                required: false
+                                            })} />
+                                            {errors.building && <span className="error-message">{errors.building.message}</span>}
                                         </div>
                                     </div>
                                 </div>
@@ -232,7 +223,11 @@ const CreateForm = () => {
                                     <div className="col-4">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Серия' {...register('passport_series', {
-                                                required: requiredPattern
+                                                required: requiredPattern,
+                                                maxLength: {
+                                                    value: 4,
+                                                    message: 'Максимальная длина 4'
+                                                }
                                             })} />
                                             {errors.passport_series && <span className="error-message">{errors.passport_series.message}</span>}
                                         </div>
@@ -240,7 +235,11 @@ const CreateForm = () => {
                                     <div className="col-8">
                                         <div className="form-group">
                                             <input className='form-control' type="text" placeholder='Номер' {...register('passport_number', {
-                                                required: requiredPattern
+                                                required: requiredPattern,
+                                                maxLength: {
+                                                    value: 6,
+                                                    message: 'Максимальная длина 6'
+                                                }
                                             })} />
                                             {errors.passport_number && <span className="error-message">{errors.passport_number.message}</span>}
                                         </div>

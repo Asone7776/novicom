@@ -10,7 +10,7 @@ const AdminSidebar: FC = () => {
         <div className="admin-sidebar">
             <div className="sidebar-top">
                 <LvbLogo linkTo='/admin' colored={true} />
-                <CurrentUser title={'Администратор'} email={'administrator@domen.ru'} />
+                <CurrentUser title={'Администратор'} email={user && user.email} />
                 <Navigation />
             </div>
             <div className="sidebar-bottom">

@@ -821,34 +821,34 @@ p {
     }
     .col {
         font-size: rem(14);
-        &.id {
-            font: {
-                family: "PT Sans Bold";
-            }
+    }
+    .id {
+        font: {
+            family: "PT Sans Bold";
         }
-        &.status {
-            span {
-                color: $black;
-            }
-            .not-completed {
-                color: $red;
-            }
-            .completed {
-                color: $primary-color;
-            }
+    }
+    &.status {
+        span {
+            color: $black;
         }
-        .arrow {
-            svg {
+        .not-completed {
+            color: $red;
+        }
+        .completed {
+            color: $primary-color;
+        }
+    }
+    .arrow {
+        svg {
+            path {
+                fill: rgba($color: $black, $alpha: 0.3);
+            }
+            @include transition();
+            &.active {
+                transform: rotate(180deg);
                 path {
-                    fill: rgba($color: $black, $alpha: 0.3);
-                }
-                @include transition();
-                &.active {
-                    transform: rotate(180deg);
-                    path {
-                        // fill: $primary-color;
-                        fill: rgba($color: $black, $alpha: 1);
-                    }
+                    // fill: $primary-color;
+                    fill: rgba($color: $black, $alpha: 1);
                 }
             }
         }
@@ -1322,7 +1322,50 @@ p {
 .react-pdf__Document {
     margin-bottom: rem(24);
 }
-.rc-input-number-input{
+.rc-input-number-input {
     text-align: center;
+}
+.custom-calendar {
+    display: flex;
+    background-color: #fff;
+    border-radius: rem(4);
+    padding-left: rem(10);
+    padding-right: rem(10);
+    align-items: center;
+    justify-content: space-between;
+    .delimetr {
+        height: rem(24);
+        width: rem(1);
+        background-color: rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+    .icon-wrapper {
+        // width: 9%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: rem(5);
+    }
+    .picker-wrapper {
+        width: 40%;
+        display: flex;
+        .react-datepicker-wrapper {
+        }
+        span {
+            font-size: rem(14);
+            color: $primary-color;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: rem(6);
+        }
+        input {
+            outline: none;
+            text-align: center;
+            font-size: rem(16);
+            width: inherit;
+            background-color: transparent;
+        }
+    }
 }
 @import "responsive";

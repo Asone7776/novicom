@@ -8,8 +8,6 @@ import OrdersPagination from "../../components/OrdersPagination";
 import { resetStatus } from '../../redux/slices/orderSlice';
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { PolicyFilterProps } from "../../types/polices";
-import { axiosAuth } from "../../axios-instances";
-import { failureNotify, successNotify } from "../../notifications";
 const PolicyPage: FC = () => {
     const dispatch = useAppDispatch();
     const orders = useAppSelector((state) => state.orders);
@@ -37,12 +35,11 @@ const PolicyPage: FC = () => {
         })
     };
 
-    const onDateRange = (arr: any) => {
+    const onDateRange = (name: string, value: Date | null) => {
         setFilterProps({
             ...filterProps,
             page: 1,
-            from: arr[0] ? moment(arr[0]).format('DD.MM.YYYY') : null,
-            to: arr[1] ? moment(arr[1]).format('DD.MM.YYYY') : null
+            [name]: value ? moment(value).format('DD.MM.YYYY') : null,
         })
     };
 
