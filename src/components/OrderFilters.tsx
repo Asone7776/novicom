@@ -79,7 +79,7 @@ const OrderFilters: FC<OrderFiltersProps> = ({ users, onFilterChange, onDateRang
                             <DatePicker
                                 locale={ru}
                                 selected={endDate}
-                                dateFormat="dd.MM.Y"
+                                dateFormat="dd.MM.yy"
                                 onChange={(date) => {
                                     onDateRange('to', date);
                                     setEndDate(date);
