@@ -687,8 +687,11 @@ p {
     padding-bottom: rem(15);
     .cm-col {
         display: flex;
-        img {
-            max-width: rem(210);
+        .vsk-logo {
+            background-size: contain;
+            background-repeat: no-repeat;
+            width: 150px;
+            background-position: center;
         }
         &:last-child {
             justify-content: flex-end;
